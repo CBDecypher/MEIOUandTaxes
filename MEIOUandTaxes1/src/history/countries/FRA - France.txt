@@ -119,6 +119,7 @@ historical_rival = GBR
 	add_ruler_personality = righteous_personality
 	add_heir_personality = wise_personality
 	#add_war_exhaustion = 10 # done in-script for economic reasons
+	set_heir_flag = renewed_french_phase
 }
 
 #1364.4.8 = {

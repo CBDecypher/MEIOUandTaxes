@@ -1585,13 +1585,47 @@ country_event = {
 		NOT = { has_country_flag = union_with_burgundy }
 	}
 	
-	immediate = { set_country_flag = union_with_burgundy }
+	immediate = { 
+		set_country_flag = union_with_burgundy
+		set_global_flag = flanders_joins_burgundy
+	}
 	
 	option = {
 		name = "flavor_bur.1001.a"
 		ai_chance = { factor = 95 }
 		log = "FE-BUR:[GetYear]:[Root.GetName]:decided for union with Burgundy:flavor_bur.1001"
 		custom_tooltip = game_over
+		every_subject_country = {
+			limit = {
+				ai = yes
+				NOT = { tag = NEV }
+				capital_scope = {
+					OR = {
+						region = france_region 
+						culture_group = french
+						culture = dutch
+						culture = flemish
+						is_part_of_hre = yes
+					}
+				}
+			}
+			BUR = { inherit = PREV }
+		}
+		every_subject_country = {
+			limit = {
+				ai = no
+				capital_scope = {
+					OR = {
+						region = france_region 
+						culture_group = french
+						culture = dutch
+						culture = flemish
+						is_part_of_hre = yes
+					}
+				}
+			}
+			BUR = { create_union = PREV }
+		}
 		every_country = {
 			limit = {
 				OR = {
@@ -1651,6 +1685,25 @@ country_event = {
 			}
 		}
 		inherit = FROM
+		if = {
+			limit = {
+				NEV = {
+					exists = yes
+				}
+			}
+			BUR = {
+				create_subject = {
+					subject = NEV
+					subject_type = appanage_subject
+				}
+				NEV = {
+					define_ruler = {
+						dynasty = PREV
+						age = 18
+					}
+				}
+			}
+		}
 		log = "FE-BUR:[GetYear]:[Root.GetName]:inherited Flanders:flavor_bur.1002"
 	}
 	
@@ -1727,7 +1780,7 @@ country_event = {
 				}
 			}
 			FLA = {
-				vassalize = BGG
+				create_union = BGG
 			}
 		}
 		if = { 
@@ -1889,7 +1942,7 @@ country_event = {		#Promised husband to Margarethe has died, who is next?
 				dynasty = "de Valois"
 			}	
 		}
-		ai_chance = { factor = 90 }
+		ai_chance = { factor = 95 }
 		hidden_effect = {
 			FRA = { set_country_flag = margarethe_marriage_promised_to_us }
 		} 
@@ -1914,8 +1967,9 @@ country_event = {		#Promised husband to Margarethe has died, who is next?
 					}
 				}
 			}
+			NOT = { FRA = { is_papal_controller = yes } } #Edmund required Papal Dispensation and ofc Avignon Papacy refused it
 		}
-		ai_chance = { factor = 10 }
+		ai_chance = { factor = 5 }
 		if = {
 			limit = {
 				exists = UEF
@@ -2718,19 +2772,6 @@ country_event = {
 		}
 		FROM = {
 			inherit = ROOT
-			if = {
-				limit = {
-					has_country_flag = bur_artois_inherit_done
-				}
-				clr_country_flag = bur_artois_inherit_done
-				release = BGG
-				create_union = BGG
-				BGG = { 
-					Reset_Religion_to_Capital = yes 
-					clr_country_flag = POP_Init
-					country_event = { id = Init.1 }
-				}
-			}
 		}
 
 	}

@@ -64,7 +64,7 @@ fra_unification_missions = {
 				tooltip = POP_HasExecAuth_70
 				check_key = { lhs = Ruler_Power value = 70 }
 			}
-			Privilege_HasGreater = { Privilege=NOSeigneurial Lvl=3 }
+			NOT = { Privilege_HasGreater = { Privilege=NOSeigneurial Lvl=3 } }
 		}
 		effect = {
 			add_country_modifier = {
@@ -1731,13 +1731,13 @@ fra_isle_missions = {
 		required_missions = { }
 		position = 6
 		provinces_to_highlight = {
-			region = ireland_region
+			area = wales_area
 			NOT = {
 				country_or_non_sovereign_subject_holds = ROOT
 			}
 		}
 		trigger = {
-			ireland_region = {
+			wales_area = {
 				type = all
 				country_or_non_sovereign_subject_holds = ROOT
 			}
@@ -2181,6 +2181,7 @@ french_missions_5_crusader_kings_2 = {
 		required_missions = { }
 		position = 19
 		trigger = { 
+			is_at_war = no
 			religion = catholic 
 			OR = { 
 				custom_trigger_tooltip = {
@@ -2408,7 +2409,7 @@ french_missions_1_balkan = {
 	
 	fra_secure_greece = {
 		icon = mission_byzantium_city_of_constantinople
-		required_missions = { fra_restore_the_hospitallers }
+		required_missions = { fra_foothold_in_greece }
 		position = 13
 		provinces_to_highlight = {
 			area = thrace_area
